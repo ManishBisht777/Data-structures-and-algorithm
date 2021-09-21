@@ -122,6 +122,21 @@ node *reverse(node *head)
     return prevptr;
 }
 
+node *reverseRecursive(node *head)
+{
+    if (head == NULL || head->next == NULL)
+    {
+        return head;
+    }
+
+    node *newhead = reverseRecursive(head->next);
+
+    head->next->next = head;
+    head->next = NULL;
+
+    return newhead;
+}
+
 int main()
 {
     node *head = NULL;
@@ -132,6 +147,6 @@ int main()
     display(head);
     // cout << search(head, 3);
 
-    node *newhead = reverse(head);
+    node *newhead = reverseRecursive(head);
     display(newhead);
 }
