@@ -237,7 +237,7 @@ int main()
     // display(newhead);
 
     makecycle(head, 2);
-    display(head);
+    // display(head);
     cout << detectcycle(head) << "\n";
     removecycle(head);
 }
