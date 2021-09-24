@@ -83,6 +83,32 @@ node *mergelist(node *&head1, node *&head2)
 
     return dummynode->next;
 }
+
+node *mergerecursive(node *&head1, node *&head2)
+{
+    if (head1 == NULL)
+    {
+        return head2;
+    }
+    if (head2 == NULL)
+    {
+        return head1;
+    }
+
+    node *result;
+    if (head1->data < head2->data)
+    {
+        result = head1;
+        result->next = mergerecursive(head1->next, head2);
+    }
+    else
+    {
+        result = head2;
+        result->next = mergerecursive(head1, head2->next);
+    }
+
+    return result;
+}
 int main()
 {
     node *head = NULL;
@@ -97,6 +123,6 @@ int main()
     insertattail(head2, 6);
     display(head2);
 
-    node *newhead = mergelist(head, head2);
+    node *newhead = mergerecursive(head, head2);
     display(newhead);
 }
