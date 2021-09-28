@@ -4,9 +4,10 @@
 
 using namespace std;
 
+// function for sorting on the basis ofsecond element of pair
 bool mycompare(pair<int, int> v, pair<int, int> v2)
 {
-    return v.first < v2.first;
+    return v.second < v2.second;
 }
 
 int main()
@@ -20,7 +21,7 @@ int main()
         v.push_back(make_pair(arr[i], i));
     }
 
-    sort(v.begin(), v.end(), mycompare);
+    sort(v.begin(), v.end());
 
     for (int i = 0; i < v.size(); i++)
     {
