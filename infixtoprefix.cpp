@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,8 +22,9 @@ int precidence(char c)
     return -1;
 }
 
-string infixtopostfix(string s)
+string infixtoprefix(string s)
 {
+    reverse(s.begin(), s.end());
     stack<char> st;
     string res;
 
@@ -32,14 +34,13 @@ string infixtopostfix(string s)
         {
             res += s[i];
         }
-
-        else if (s[i] == '(')
+        else if (s[i] == ')')
         {
             st.push(s[i]);
         }
-        else if (s[i] == ')')
+        else if (s[i] == '(')
         {
-            while (!st.empty() && st.top() != '(')
+            while (!st.empty() && st.top() != ')')
             {
                 res += st.top();
                 st.pop();
@@ -66,10 +67,12 @@ string infixtopostfix(string s)
         st.pop();
     }
 
+    reverse(s.begin(), s.end());
+
     return res;
 }
 
 int main()
 {
-    cout << infixtopostfix("(a-b/c)*(a/k-l)");
+    cout << infixtoprefix("(a-b/c)*(a/k-l)");
 }
