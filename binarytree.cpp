@@ -51,20 +51,73 @@ void postorder(struct node *root)
     cout << root->data << " ";
 }
 
+int search(int inorder[], int start, int end, int curr)
+{
+    for (int i = start; i < end; i++)
+    {
+        if (inorder[i] == curr)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+node *buildtree(int preorder[], int inorder[], int st, int end)
+{
+    if (st > end)
+    {
+        return NULL;
+    }
+
+    static int idx = 0;
+    int curr = preorder[idx];
+    idx++;
+
+    node *n = new node(curr);
+
+    int pos = search(inorder, st, end, curr);
+    if (st == end)
+    {
+        return n;
+    }
+
+    n->left = buildtree(preorder, inorder, st, pos - 1);
+    n->right = buildtree(preorder, inorder, pos + 1, end);
+
+    return n;
+}
+
+void display(node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    display(root->left);
+    cout << root->data << " ";
+    display(root->right);
+}
 int main()
 {
-    struct node *root = new node(1);
-    root->right = new node(3);
-    root->left = new node(2);
+    // struct node *root = new node(1);
+    // root->right = new node(3);
+    // root->left = new node(2);
 
-    root->left->left = new node(4);
-    root->left->right = new node(5);
-    root->right->left = new node(6);
-    root->right->right = new node(7);
+    // root->left->left = new node(4);
+    // root->left->right = new node(5);
+    // root->right->left = new node(6);
+    // root->right->right = new node(7);
 
-    preorder(root);
-    cout << "\n";
-    inorder(root);
-    cout << "\n";
-    postorder(root);
+    // preorder(root);
+    // cout << "\n";
+    // inorder(root);
+    // cout << "\n";
+    // postorder(root);
+
+    int inorder[] = {4, 2, 1, 5, 3};
+    int preorder[] = {1, 2, 4, 3, 5};
+
+    node *root = buildtree(preorder, inorder, 0, 4);
+    display(root);
 }
