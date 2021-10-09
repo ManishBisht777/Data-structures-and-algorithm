@@ -205,6 +205,28 @@ int calccdia2(node *root, int *height)
 
     return max(currdia, max(ldia, rdia));
 }
+
+void sumreplace(node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    sumreplace(root->left);
+    sumreplace(root->right);
+
+    if (root->left != NULL)
+    {
+        root->data += root->left->data;
+    }
+
+    if (root->right != NULL)
+    {
+        root->data += root->right->data;
+    }
+}
+
 int main()
 {
     node *root = new node(1);
@@ -229,6 +251,12 @@ int main()
     // display(root);
 
     // printlevel(root);
-    int height = 0;
-    cout << calccdia2(root, &height);
+
+    // int height = 0;
+    // cout << calccdia2(root, &height);
+
+    preorder(root);
+    cout << "\n";
+    sumreplace(root);
+    preorder(root);
 }
