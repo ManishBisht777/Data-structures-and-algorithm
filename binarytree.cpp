@@ -160,6 +160,51 @@ void printlevel(node *root)
         }
     }
 }
+
+int calcheight(node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    return max(calcheight(root->left), calcheight(root->right)) + 1;
+}
+
+int calcdia(node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+
+    int lh = calcheight(root->left);
+    int rh = calcheight(root->right);
+
+    int currdia = lh + rh + 1;
+    int ldia = calcdia(root->left);
+    int rdia = calcdia(root->right);
+
+    return max(currdia, max(ldia, rdia));
+}
+
+int calccdia2(node *root, int *height)
+{
+    if (root == NULL)
+    {
+        *height = 0;
+        return 0;
+    }
+
+    int lh = 0, rh = 0;
+    int ldia = calccdia2(root->left, &lh);
+    int rdia = calccdia2(root->right, &rh);
+
+    int currdia = lh + rh + 1;
+
+    *height = max(lh, rh) + 1;
+
+    return max(currdia, max(ldia, rdia));
+}
 int main()
 {
     node *root = new node(1);
@@ -183,5 +228,7 @@ int main()
     // node *root = buildT(postorder, inorder, 0, 4);
     // display(root);
 
-    printlevel(root);
+    // printlevel(root);
+    int height = 0;
+    cout << calccdia2(root, &height);
 }
