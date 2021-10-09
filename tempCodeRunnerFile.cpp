@@ -1,4 +1,2 @@
- for (int i = 0; i < n; i++)
-    {
-        cout << arr[i] << " ";
-    }
+
+    // root->right->left->left->left = new node(69);

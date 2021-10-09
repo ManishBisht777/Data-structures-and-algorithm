@@ -227,6 +227,47 @@ void sumreplace(node *root)
     }
 }
 
+int height(node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    int lh = height(root->left);
+    int rh = height(root->right);
+    return max(lh, rh) + 1;
+}
+
+bool isbalanced(node *root)
+{
+    if (root == NULL)
+    {
+        return true;
+    }
+
+    if (isbalanced(root->left) == false)
+    {
+        return false;
+    }
+
+    if (isbalanced(root->right) == false)
+    {
+        return false;
+    }
+
+    int lh = height(root->left);
+    int rh = height(root->right);
+
+    if (abs(lh - rh) <= 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 int main()
 {
     node *root = new node(1);
@@ -236,6 +277,8 @@ int main()
     root->left->right = new node(5);
     root->right->left = new node(6);
     root->right->right = new node(7);
+    // root->right->left->left = new node(68);
+    // root->right->left->left->left = new node(69);
 
     // preorder(root);
     // cout << "\n";
@@ -255,8 +298,18 @@ int main()
     // int height = 0;
     // cout << calccdia2(root, &height);
 
-    preorder(root);
-    cout << "\n";
-    sumreplace(root);
-    preorder(root);
+    // preorder(root);
+    // cout << "\n";
+    // sumreplace(root);
+    // preorder(root);
+
+    if (isbalanced(root) == true)
+    {
+        cout << "true";
+    }
+    else
+    {
+        cout << "false";
+    }
+    return 0;
 }
