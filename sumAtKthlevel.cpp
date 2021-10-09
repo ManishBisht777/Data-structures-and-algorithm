@@ -62,6 +62,25 @@ int sumatk(node *root, int k)
     }
     return sum;
 }
+
+int countNodes(node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    return countNodes(root->left) + countNodes(root->right) + 1;
+}
+
+int sumnodes(node *root)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+
+    return sumnodes(root->left) + sumnodes(root->right) + root->data;
+}
 int main()
 {
     node *root = new node(1);
@@ -71,5 +90,9 @@ int main()
     root->left->right = new node(5);
     root->right->left = new node(6);
     root->right->right = new node(7);
-    cout << sumatk(root, 1);
+    // cout << sumatk(root, 1);
+
+    cout << countNodes(root);
+    cout << "\n";
+    cout << sumnodes(root);
 }
