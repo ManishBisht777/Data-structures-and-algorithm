@@ -53,7 +53,7 @@ void postorder(struct node *root)
 
 int search(int inorder[], int start, int end, int curr)
 {
-    for (int i = start; i < end; i++)
+    for (int i = start; i <= end; i++)
     {
         if (inorder[i] == curr)
         {
@@ -88,6 +88,33 @@ node *buildtree(int preorder[], int inorder[], int st, int end)
     return n;
 }
 
+node *buildT(int postorder[], int inorder[], int start, int end)
+{
+    static int idx = 4;
+
+    if (start > end)
+    {
+        return NULL;
+    }
+
+    int val = postorder[idx];
+    idx--;
+
+    node *n = new node(val);
+
+    if (start == end)
+    {
+        return n;
+    }
+
+    int pos = search(inorder, start, end, val);
+
+    n->right = buildT(postorder, inorder, pos + 1, end);
+    n->left = buildT(postorder, inorder, start, pos - 1);
+
+    return n;
+}
+
 void display(node *root)
 {
     if (root == NULL)
@@ -116,8 +143,9 @@ int main()
     // postorder(root);
 
     int inorder[] = {4, 2, 1, 5, 3};
-    int preorder[] = {1, 2, 4, 3, 5};
+    // int preorder[] = {1, 2, 4, 3, 5};
+    int postorder[] = {4, 2, 5, 3, 1};
 
-    node *root = buildtree(preorder, inorder, 0, 4);
+    node *root = buildT(postorder, inorder, 0, 4);
     display(root);
 }
