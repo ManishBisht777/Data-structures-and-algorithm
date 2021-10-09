@@ -268,6 +268,34 @@ bool isbalanced(node *root)
     }
 }
 
+bool isbalanced2(node *root, int *height)
+{
+    if (root == NULL)
+    {
+        return true;
+    }
+    int lh = 0, rh = 0;
+
+    if (!isbalanced2(root->left, &lh))
+    {
+        return false;
+    }
+    if (!isbalanced2(root->right, &rh))
+    {
+        return false;
+    }
+
+    *height = max(lh, rh) + 1;
+
+    if (abs(lh - rh) <= 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 int main()
 {
     node *root = new node(1);
@@ -277,8 +305,8 @@ int main()
     root->left->right = new node(5);
     root->right->left = new node(6);
     root->right->right = new node(7);
-    // root->right->left->left = new node(68);
-    // root->right->left->left->left = new node(69);
+    root->right->left->left = new node(68);
+    root->right->left->left->left = new node(69);
 
     // preorder(root);
     // cout << "\n";
@@ -303,7 +331,8 @@ int main()
     // sumreplace(root);
     // preorder(root);
 
-    if (isbalanced(root) == true)
+    int height = 0;
+    if (isbalanced2(root, &height) == true)
     {
         cout << "true";
     }
