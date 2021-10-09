@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -125,16 +126,49 @@ void display(node *root)
     cout << root->data << " ";
     display(root->right);
 }
+
+void printlevel(node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    queue<node *> q;
+    q.push(root);
+    q.push(NULL);
+
+    while (!q.empty())
+    {
+        node *n = q.front();
+        q.pop();
+        if (n != NULL)
+        {
+            cout << n->data << " ";
+            if (n->left)
+            {
+                q.push(n->left);
+            }
+            if (n->right)
+            {
+                q.push(n->right);
+            }
+        }
+        else if (!q.empty())
+        {
+            q.push(NULL);
+        }
+    }
+}
 int main()
 {
-    // struct node *root = new node(1);
-    // root->right = new node(3);
-    // root->left = new node(2);
-
-    // root->left->left = new node(4);
-    // root->left->right = new node(5);
-    // root->right->left = new node(6);
-    // root->right->right = new node(7);
+    node *root = new node(1);
+    root->right = new node(3);
+    root->left = new node(2);
+    root->left->left = new node(4);
+    root->left->right = new node(5);
+    root->right->left = new node(6);
+    root->right->right = new node(7);
 
     // preorder(root);
     // cout << "\n";
@@ -142,10 +176,12 @@ int main()
     // cout << "\n";
     // postorder(root);
 
-    int inorder[] = {4, 2, 1, 5, 3};
-    // int preorder[] = {1, 2, 4, 3, 5};
-    int postorder[] = {4, 2, 5, 3, 1};
+    // int inorder[] = {4, 2, 1, 5, 3};
+    // // int preorder[] = {1, 2, 4, 3, 5};
+    // int postorder[] = {4, 2, 5, 3, 1};
 
-    node *root = buildT(postorder, inorder, 0, 4);
-    display(root);
+    // node *root = buildT(postorder, inorder, 0, 4);
+    // display(root);
+
+    printlevel(root);
 }
