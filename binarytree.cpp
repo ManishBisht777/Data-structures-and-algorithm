@@ -433,6 +433,34 @@ int distbwtnodes(node *root, int n1, int n2)
 
     return d1 + d2;
 }
+
+void flatten(node *root)
+{
+    if (root == NULL || (root->left == NULL && root->right == NULL))
+    {
+        return;
+    }
+
+    if (root->left != NULL)
+    {
+        flatten(root->left);
+        node *temp = root->right;
+        root->right = root->left;
+        root->left = NULL;
+
+        node *t = root->right;
+
+        while (t->right != NULL)
+        {
+            t = t->right;
+        }
+
+        t->right = temp;
+    }
+
+    flatten(root->right);
+}
+
 int main()
 {
     node *root = new node(1);
@@ -483,5 +511,8 @@ int main()
     // cout << "\n";
     // leftview(root);
 
-    cout << distbwtnodes(root, 4, 5);
+    // cout << distbwtnodes(root, 4, 5);
+
+    flatten(root);
+    inorder(root);
 }
