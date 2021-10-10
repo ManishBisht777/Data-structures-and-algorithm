@@ -369,6 +369,70 @@ void leftview(node *root)
         }
     }
 }
+
+node *lca(node *root, int n1, int n2)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+
+    if (root->data == n1 || root->data == n2)
+    {
+        return root;
+    }
+
+    node *left = lca(root->left, n1, n2);
+    node *right = lca(root->right, n1, n2);
+
+    if (left != NULL && right != NULL)
+    {
+        return root;
+    }
+
+    if (left == NULL && right == NULL)
+    {
+        return NULL;
+    }
+
+    if (left != NULL)
+    {
+        return lca(root->left, n1, n2);
+    }
+
+    return lca(root->right, n1, n2);
+}
+
+int finddist(node *root, int k, int dist)
+{
+    if (root == NULL)
+    {
+        return -1;
+    }
+
+    if (root->data == k)
+    {
+        return dist;
+    }
+
+    int left = finddist(root->left, k, dist + 1);
+    if (left != -1)
+    {
+        return left;
+    }
+
+    return finddist(root->right, k, dist + 1);
+}
+
+int distbwtnodes(node *root, int n1, int n2)
+{
+    node *lc = lca(root, n1, n2);
+
+    int d1 = finddist(lc, n1, 0);
+    int d2 = finddist(lc, n2, 0);
+
+    return d1 + d2;
+}
 int main()
 {
     node *root = new node(1);
@@ -414,7 +478,10 @@ int main()
     //     cout << "false";
     // }
     // return 0;
-    rightview(root);
-    cout << "\n";
-    leftview(root);
+
+    // rightview(root);
+    // cout << "\n";
+    // leftview(root);
+
+    cout << distbwtnodes(root, 4, 5);
 }
