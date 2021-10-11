@@ -461,6 +461,69 @@ void flatten(node *root)
     flatten(root->right);
 }
 
+void printsubtreenodes(node *root, int k)
+{
+    if (root == NULL || k < 0)
+    {
+        return;
+    }
+
+    if (k == 0)
+    {
+        cout << root->data << " ";
+        return;
+    }
+
+    printsubtreenodes(root->left, k - 1);
+    printsubtreenodes(root->right, k - 1);
+}
+
+int printnodesatk(node *root, node *target, int k)
+{
+    if (root == NULL)
+    {
+        return -1;
+    }
+
+    if (root == target)
+    {
+        printsubtreenodes(root, k);
+        return 0;
+    }
+
+    int dl = printnodesatk(root->left, target, k);
+    if (dl != -1)
+    {
+        if (dl + 1 == k)
+        {
+            cout << root->data << " ";
+        }
+        else
+        {
+            printsubtreenodes(root->right, k - dl - 2);
+        }
+
+        return dl + 1;
+    }
+
+    int dr = printnodesatk(root->right, target, k);
+    if (dr != -1)
+    {
+        if (dr + 1 == k)
+        {
+            cout << root->data << " ";
+        }
+        else
+        {
+            printsubtreenodes(root->left, k - dr - 2);
+        }
+
+        return dr + 1;
+    }
+
+    return -1;
+}
+
 int main()
 {
     node *root = new node(1);
@@ -513,6 +576,8 @@ int main()
 
     // cout << distbwtnodes(root, 4, 5);
 
-    flatten(root);
-    inorder(root);
+    // flatten(root);
+    // inorder(root);
+
+    printnodesatk(root, root, 2);
 }
