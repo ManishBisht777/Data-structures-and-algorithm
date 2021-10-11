@@ -594,6 +594,32 @@ node *LCA2(node *root, int n1, int n2)
     }
     return rightlca;
 }
+
+int maxpath(node *root, int &ans)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+
+    int left = maxpath(root->left, ans);
+    int right = maxpath(root->right, ans);
+
+    int nodemax = max(max(root->data, root->data + left + right), max(root->data + left, root->data + right));
+
+    ans = max(ans, nodemax);
+
+    int singlepathsum = max(root->data, max(root->data + left, root->data + right));
+
+    return singlepathsum;
+}
+
+int maxpathsum(node *root)
+{
+    int ans = -9999999;
+    maxpath(root, ans);
+    return ans;
+}
 int main()
 {
     node *root = new node(1);
@@ -651,6 +677,8 @@ int main()
 
     // printnodesatk(root, root, 2);
 
-    node *pc = LCA2(root, 7, 6);
-    cout << pc->data;
+    // node *pc = LCA2(root, 7, 6);
+    // cout << pc->data;
+
+    cout << maxpathsum(root);
 }
