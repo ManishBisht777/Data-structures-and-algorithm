@@ -567,6 +567,33 @@ int LCA(node *root, int n1, int n2)
 
     return path1[pc - 1];
 }
+
+node *LCA2(node *root, int n1, int n2)
+{
+    if (root == NULL)
+    {
+        return NULL;
+    }
+
+    if (root->data == n1 || root->data == n2)
+    {
+        return root;
+    }
+
+    node *leftlca = LCA2(root->left, n1, n2);
+    node *rightlca = LCA2(root->right, n1, n2);
+
+    if (leftlca && rightlca)
+    {
+        return root;
+    }
+
+    if (leftlca != NULL)
+    {
+        return leftlca;
+    }
+    return rightlca;
+}
 int main()
 {
     node *root = new node(1);
@@ -624,6 +651,6 @@ int main()
 
     // printnodesatk(root, root, 2);
 
-    int pc = LCA(root, 7, 6);
-    cout << pc;
+    node *pc = LCA2(root, 7, 6);
+    cout << pc->data;
 }
