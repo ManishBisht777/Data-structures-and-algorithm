@@ -112,12 +112,18 @@ void Union(int arr1[], int arr2[], int m, int n)
     }
     while (i < m)
     {
-        cout << arr1[i] << " ";
+        if (arr1[i] != prev1)
+        {
+            cout << arr1[i] << " ";
+        }
         i++;
     }
     while (j < n)
     {
-        cout << arr2[j] << " ";
+        if (arr2[j] != prev2)
+        {
+            cout << arr2[j] << " ";
+        }
         j++;
     }
 }
