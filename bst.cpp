@@ -69,6 +69,51 @@ node *searchinbst(node *root, int key)
     return searchinbst(root->right, key);
 }
 
+node *inordersucc(node *root)
+{
+    node *curr = root;
+
+    while (curr && curr->left != NULL)
+    {
+        curr = curr->left;
+    }
+
+    return curr;
+}
+
+node *deleteinbst(node *root, int key)
+{
+    if (key < root->data)
+    {
+        root->left = deleteinbst(root->left, key);
+    }
+    else if (key > root->data)
+    {
+        root->right = deleteinbst(root->right, key);
+    }
+    else
+    {
+        if (root->right == NULL)
+        {
+            node *temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->left == NULL)
+        {
+            node *temp = root->left;
+            free(root);
+            return temp;
+        }
+
+        node *temp = inordersucc(root->right);
+        root->data = temp->data;
+        root->right = deleteinbst(root->right, temp->data);
+    }
+
+    return root;
+}
+
 int main()
 {
     node *root = NULL;
@@ -79,14 +124,18 @@ int main()
     insertbst(root, 2);
     insertbst(root, 7);
 
-    // inorder(root);
+    inorder(root);
 
-    if (searchinbst(root, 10) == NULL)
-    {
-        cout << "not found";
-    }
-    else
-    {
-        cout << "found";
-    }
+    // if (searchinbst(root, 10) == NULL)
+    // {
+    //     cout << "not found";
+    // }
+    // else
+    // {
+    //     cout << "found";
+    // }
+
+    cout << "\n";
+    deleteinbst(root, 5);
+    inorder(root);
 }
