@@ -73,6 +73,54 @@ void intersection(int arr1[], int arr2[], int m, int n)
     }
 }
 
+void Union(int arr1[], int arr2[], int m, int n)
+{
+    quicksort(arr1, 0, m - 1);
+    quicksort(arr2, 0, n - 1);
+
+    int i = 0, j = 0, prev1 = 0, prev2 = 0;
+
+    while (i < m && j < n)
+    {
+        while (arr1[i] == prev1 && i < m)
+        {
+            i++;
+        }
+        while (arr2[i] == prev2 && j < n)
+        {
+            j++;
+        }
+        if (arr1[i] == arr2[j])
+        {
+            cout << arr1[i] << " ";
+            prev1 = arr1[i];
+            prev2 = arr2[j];
+            i++, j++;
+        }
+        else if (arr1[i] < arr2[j])
+        {
+            cout << arr1[i] << " ";
+            prev1 = arr1[i];
+            i++;
+        }
+        else
+        {
+            cout << arr2[j] << " ";
+            prev2 = arr2[j];
+            j++;
+        }
+    }
+    while (i < m)
+    {
+        cout << arr1[i] << " ";
+        i++;
+    }
+    while (j < n)
+    {
+        cout << arr2[j] << " ";
+        j++;
+    }
+}
 int main()
 {
     int n1, n2;
@@ -91,4 +139,6 @@ int main()
     }
 
     intersection(a, b, n1, n2);
+    cout << "\n";
+    Union(a, b, n1, n2);
 }
