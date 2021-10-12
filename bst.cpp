@@ -48,6 +48,27 @@ node *insertbst(node *root, int val)
     return root;
 }
 
+node *searchinbst(node *root, int key)
+{
+    if (root == NULL)
+    {
+
+        return NULL;
+    }
+
+    if (root->data == key)
+    {
+        return root;
+    }
+
+    if (root->data > key)
+    {
+        return searchinbst(root->left, key);
+    }
+
+    return searchinbst(root->right, key);
+}
+
 int main()
 {
     node *root = NULL;
@@ -58,5 +79,14 @@ int main()
     insertbst(root, 2);
     insertbst(root, 7);
 
-    inorder(root);
+    // inorder(root);
+
+    if (searchinbst(root, 10) == NULL)
+    {
+        cout << "not found";
+    }
+    else
+    {
+        cout << "found";
+    }
 }
