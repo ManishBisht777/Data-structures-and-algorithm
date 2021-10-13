@@ -1,24 +1,47 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
 int minJumps(int arr[], int n)
 {
     // Your code here
-    int jump = 0;
-    int count = 0;
-    int i = 0;
-    while (i < n - 1)
+    if (n <= 1)
     {
-        jump = arr[i];
-        if (jump == 0)
-        {
-            return -1;
-        }
-        i = i + jump;
-        count++;
+        return 1;
     }
-    return count;
+    if (arr[0] == 0)
+    {
+        return -1;
+    }
+
+    int maxreach = arr[0];
+    int step = arr[0];
+    int jump = 1, i = 1;
+
+    for (i = 1; i < n; i++)
+    {
+        if (i == n - 1)
+        {
+            return jump;
+        }
+
+        maxreach = max(maxreach, i + arr[i]);
+
+        step--;
+
+        if (step == 0)
+        {
+            jump++;
+
+            if (i >= maxreach)
+            {
+                return -1;
+            }
+            step = maxreach - i;
+        }
+    }
+    return -1;
 }
 
 int main()
