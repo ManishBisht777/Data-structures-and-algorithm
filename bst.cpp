@@ -114,6 +114,28 @@ node *deleteinbst(node *root, int key)
     return root;
 }
 
+bool isbbst(node *root, node *min = NULL, node *max = NULL)
+{
+    if (root == NULL)
+    {
+        return true;
+    }
+
+    if (min != NULL && root->data <= min->data)
+    {
+        return false;
+    }
+
+    if (max != NULL && root->data >= max->data)
+    {
+        return false;
+    }
+
+    bool left = isbbst(root->left, min, root);
+    bool right = isbbst(root->right, root, max);
+    return left && right;
+}
+
 int main()
 {
     node *root = NULL;
@@ -124,7 +146,7 @@ int main()
     insertbst(root, 2);
     insertbst(root, 7);
 
-    inorder(root);
+    // inorder(root);
 
     // if (searchinbst(root, 10) == NULL)
     // {
@@ -135,7 +157,16 @@ int main()
     //     cout << "found";
     // }
 
-    cout << "\n";
-    deleteinbst(root, 5);
-    inorder(root);
+    // cout << "\n";
+    // deleteinbst(root, 5);
+    // inorder(root);
+
+    if (isbbst(root, NULL, NULL))
+    {
+        cout << "valid";
+    }
+    else
+    {
+        cout << "invalid";
+    }
 }
