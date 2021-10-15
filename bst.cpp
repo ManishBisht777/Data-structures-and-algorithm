@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -136,15 +137,69 @@ bool isbbst(node *root, node *min = NULL, node *max = NULL)
     return left && right;
 }
 
+void zigzag(node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    stack<node *> currlvl;
+    stack<node *> nxtlvl;
+
+    bool lefttoright = true;
+
+    currlvl.push(root);
+
+    while (!currlvl.empty())
+    {
+        node *temp = currlvl.top();
+        currlvl.pop();
+
+        if (temp)
+        {
+            cout << temp->data << " ";
+
+            if (lefttoright)
+            {
+                if (temp->left)
+                {
+                    nxtlvl.push(temp->left);
+                }
+                if (temp->right)
+                {
+                    nxtlvl.push(temp->right);
+                }
+            }
+            else
+            {
+                if (temp->right)
+                {
+                    nxtlvl.push(temp->right);
+                }
+                if (temp->left)
+                {
+                    nxtlvl.push(temp->left);
+                }
+            }
+        }
+
+        if (currlvl.empty())
+        {
+            lefttoright = !lefttoright;
+            swap(currlvl, nxtlvl);
+        }
+    }
+}
+
 int main()
 {
     node *root = NULL;
-    root = insertbst(root, 5);
-    insertbst(root, 1);
-    insertbst(root, 3);
-    insertbst(root, 4);
-    insertbst(root, 2);
-    insertbst(root, 7);
+    root = insertbst(root, 12);
+    insertbst(root, 9);
+    insertbst(root, 15);
+    insertbst(root, 5);
+    insertbst(root, 10);
 
     // inorder(root);
 
@@ -161,12 +216,14 @@ int main()
     // deleteinbst(root, 5);
     // inorder(root);
 
-    if (isbbst(root, NULL, NULL))
-    {
-        cout << "valid";
-    }
-    else
-    {
-        cout << "invalid";
-    }
+    // if (isbbst(root, NULL, NULL))
+    // {
+    //     cout << "valid";
+    // }
+    // else
+    // {
+    //     cout << "invalid";
+    // }
+
+    zigzag(root);
 }
