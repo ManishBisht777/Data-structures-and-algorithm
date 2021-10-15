@@ -192,6 +192,35 @@ void zigzag(node *root)
     }
 }
 
+bool isidentical(node *root1, node *root2)
+{
+    if (root1 == NULL && root2 == NULL)
+    {
+        return true;
+    }
+
+    else if (root1 == NULL || root2 == NULL)
+    {
+        return false;
+    }
+
+    else
+    {
+        bool cond1 = root1->data == root2->data;
+        bool cond2 = isidentical(root1->left, root2->left);
+        bool cond3 = isidentical(root1->right, root2->right);
+
+        if (cond1 && cond2 && cond3)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
 int main()
 {
     node *root = NULL;
@@ -200,6 +229,13 @@ int main()
     insertbst(root, 15);
     insertbst(root, 5);
     insertbst(root, 10);
+
+    node *root1 = NULL;
+    root = insertbst(root1, 12);
+    insertbst(root1, 9);
+    insertbst(root1, 15);
+    insertbst(root1, 5);
+    insertbst(root1, 1);
 
     // inorder(root);
 
@@ -225,5 +261,14 @@ int main()
     //     cout << "invalid";
     // }
 
-    zigzag(root);
+    // zigzag(root);
+
+    if (isidentical(root, root1))
+    {
+        cout << "\n\t identical";
+    }
+    else
+    {
+        cout << "not";
+    }
 }
