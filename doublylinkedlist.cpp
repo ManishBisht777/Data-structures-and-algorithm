@@ -93,17 +93,9 @@ int main()
 {
     node *head = NULL;
 
-    insertattail(head, 1);
-    insertattail(head, 2);
-    insertattail(head, 3);
-    insertattail(head, 4);
-    insertattail(head, 5);
-    insertattail(head, 6);
-    insertattail(head, 7);
-    insertattail(head, 8);
+    insertathead(head, 1);
     display(head);
-    deletion(head, 3);
-    deletehead(head);
+    insertattail(head, 2);
     display(head);
     return 0;
 }
