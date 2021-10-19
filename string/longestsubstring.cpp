@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    string s = "abcdefghihaaaaaaabcdefghijklmopbb";
+    string s = "aaaaaaa";
     int i = 0, j = 1, ans = 0;
     int k;
 
