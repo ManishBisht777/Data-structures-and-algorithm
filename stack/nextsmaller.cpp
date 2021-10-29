@@ -16,7 +16,7 @@ void nextsmall(int arr[], int n)
 
         if (s.empty())
         {
-            ans[i] = -1;
+            ans[i] = n + 1;
         }
         else
         {

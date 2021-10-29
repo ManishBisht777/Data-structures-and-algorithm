@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void nextsmall(int arr[], int n)
+void prevsmall(int arr[], int n)
 {
     stack<int> s;
     for (int i = 0; i < n; i++)
